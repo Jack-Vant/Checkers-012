@@ -8,16 +8,16 @@
 </head>
 
 <body class="container" style="align-content: center;">
-    <div class="container" title="controls" style="width: 40%; min-height: 12.5%;">
+    <div class="container" style="width: 40%; min-height: fit-content;">
         <details open>
             <summary>List</summary>
             <div class="form">
                 <button id="add">Add board</button>
-                <b aria-hidden="true"></b>
+                &nbsp;
                 <button type="button" id="prev">&lt;</button>
                 <input type="number" min="0" id="index">
                 <button type="button" id="next">&gt;</button>
-                <b aria-hidden="true"></b>
+                &nbsp;
                 <button id="remove">Remove board</button>
             </div>
         </details>
@@ -28,21 +28,23 @@
                     Rows
                     <input id="N" type="number" name="Rows" min="3" value="3">
                 </label>
+                &nbsp;
                 <label>
                     Columns
                     <input id="M" type="number" name="Columns" min="3" value="3">
                 </label>
+                &nbsp;
                 <button id="create">Generate</button>
             </form>
         </details>
     </div>
-    <div class="container b-cont" style="max-height: 54%; max-width: 96%;">
+    <div class="b-cont">
         <div id="board">
-            <span>Is JavaScript disabled?</span>
+            <span style="width: 20em;">Is JavaScript disabled?</span>
         </div>
     </div>
     <textarea id="display" cols="40" rows="12">0 0</textarea>
-    <button id="sync">Sync list to text</button>
+    <button id="sync">Sync to textbox</button>
     <span id="dropzone">Drop file(s) here to append</span>
     <span id="err"></span>
     <script type="module" src="scripts/main.js"></script>
