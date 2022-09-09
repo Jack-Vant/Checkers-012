@@ -1,6 +1,6 @@
 import { div_board, input_index, textarea_display } from "./binds.js"
 import { N, M, clearBoard, resize, fillBoard } from "./board.js";
-import { errMsg } from "./ui.js";
+import { popup } from "./ui.js";
 
 let boards = [];
 let index;
@@ -16,10 +16,22 @@ function displayBoard(i = 0) {
     const b = boards?.[i];
     setIndex(i);
     if (b == null)
-        return errMsg("Out of bounds");
+        return popup("Out of bounds");
     const result = re.exec(b);
     resize(...result[1].split(" ").map(e => Number(e)));
     fillBoard(result[2].split(" "));
+}
+
+function animate(start, end, speed) {
+    if (end < 0 && end >= boards.length)
+        end = boards.length;
+    let i = start;
+    const interval = window.setInterval(() => {
+        displayBoard(boards[i]);
+        i++;
+        if (i >= end)
+            clearInterval(interval);
+    }, speed)
 }
 
 function addBoard() {
@@ -28,12 +40,12 @@ function addBoard() {
     text = text.trimEnd();
     setIndex(boards.length);
     boards.push(text + "\n");
-    textarea_display.value = textarea_display.value.replace(/0 0$/, text + "\n0 0");
+    textarea_display.value = textarea_display.value.replace(/^0 0$/m, text + "\n0 0");
 }
 
 function removeBoard() {
     if (boards.splice(index, 1).length == 0)
-        errMsg("Bad index?");
+        popup("Empty");
     else
         clearBoard();
     textarea_display.value = boards.join("") + "0 0";

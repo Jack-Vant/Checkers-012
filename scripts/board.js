@@ -17,7 +17,7 @@ function resize(n, m) {
     M = m;
     input_M.value = M;
     div_board.style.width = `${m * 2}em`;
-    div_board.className = (m % 2 == 0) ? "even" : "odd";
+    div_board.className = (m % 2 == 0) ? "board even" : "board odd";
 }
 
 function addCell(face = "x") {

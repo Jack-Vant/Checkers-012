@@ -4,7 +4,7 @@ import { readBoards, displayBoard } from "./boardlist.js";
 let err_timer;
 let err_ticks = 0;
 
-function errMsg(msg) {
+function popup(msg) {
     err_ticks = 0;
     clearTimeout(err_timer);
     span_err.textContent = msg;
@@ -17,7 +17,7 @@ function errMsg(msg) {
     }, 600);
 }
 
-const faces = 3;
+const faces = 6;
 function toggle(e) {
     const cssClass = e.target.classList[0]
     const c = Number(cssClass);
@@ -55,4 +55,4 @@ function dropFile(ev) {
     }
 }
 
-export { errMsg, toggle, nudge, dragFile, dropFile }
+export { popup, toggle, nudge, dragFile, dropFile }

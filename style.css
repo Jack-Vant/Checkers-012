@@ -48,19 +48,19 @@ input[type=number] {
 }
 
 .b-cont {
-    max-width: 95%;
     overflow: auto;
-    margin: 1em;
+    max-width: 100%;
 }
 
-#board {
+.board {
     display: inline-flex;
     flex-wrap: wrap-reverse;
     line-height: 2;
     outline: grey solid 1px;
+    margin: 1em;
 }
 
-#board span {
+.board span {
     height: 2em;
     width: 2em;
     font-weight: bold;
@@ -70,22 +70,37 @@ input[type=number] {
     outline-offset: -1px;
 }
 
-#board span:focus-visible {
+.board span:focus-within {
     outline: 2px solid orange;
     outline-offset: -2px;
 }
 
-span.\31::before {
+span.\31::before,
+span.\34::before {
     content: "(1)";
-    width: 100%;
 }
 
-span.\32::before {
+span.\32::before,
+span.\35::before {
     content: "(2)";
-    width: 100%;
 }
 
-#board span.v {
+span.\33 {
+    outline: 2px dashed greenyellow;
+    outline-offset: -2px;
+}
+
+span.\34 {
+    outline: 2px dashed gold;
+    outline-offset: -2px;
+}
+
+span.\35 {
+    outline: 2px groove crimson;
+    outline-offset: -2px;
+}
+
+.board span.v {
     background-color: black;
     color: white;
     cursor: pointer;
@@ -112,8 +127,8 @@ textarea {
     width: 66.7%;
     height: 1.25em;
     overflow: auto;
-    color: crimson;
-    background-color: transparent;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.75);
     font-weight: normal;
     display: none;
 }
