@@ -4,10 +4,12 @@ import { popup } from "./ui.js";
 
 let boards = [];
 let index;
-const re = /(\d?\d \d?\d)\n((?:[0-2] ?)+)\n/;
+const re = /(\d?\d \d?\d)\n((?:\d ?)+)\n/;
 const re_g = new RegExp(re.source, "g");
 
 function setIndex(i) {
+    if (i < 0) i = 0;
+    else if (i >= boards.length) i = boards.length - 1;
     index = i;
     input_index.value = index;
 }
@@ -22,24 +24,11 @@ function displayBoard(i = 0) {
     fillBoard(result[2].split(" "));
 }
 
-function animate(start, end, speed) {
-    if (end < 0 && end >= boards.length)
-        end = boards.length;
-    let i = start;
-    const interval = window.setInterval(() => {
-        displayBoard(boards[i]);
-        i++;
-        if (i >= end)
-            clearInterval(interval);
-    }, speed)
-}
-
 function addBoard() {
     let text = `${M} ${N}\n`;
     div_board.querySelectorAll("span.v").forEach(e => text += e.classList[0] + " ");
     text = text.trimEnd();
-    setIndex(boards.length);
-    boards.push(text + "\n");
+    setIndex(boards.push(text + "\n") - 1);
     textarea_display.value = textarea_display.value.replace(/^0 0$/m, text + "\n0 0");
 }
 
@@ -59,4 +48,4 @@ function readBoards() {
     displayBoard(0);
 }
 
-export { addBoard, removeBoard, readBoards, displayBoard }
+export { boards, addBoard, removeBoard, readBoards, displayBoard }

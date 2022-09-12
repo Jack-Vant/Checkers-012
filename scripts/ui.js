@@ -1,19 +1,19 @@
-import { input_index, textarea_display, span_err } from "./binds.js"
-import { readBoards, displayBoard } from "./boardlist.js";
+import { button_play_stop, input_start, input_end, textarea_display, span_popup } from "./binds.js"
+import { boards, readBoards, displayBoard } from "./boardlist.js";
 
-let err_timer;
-let err_ticks = 0;
+let popup_timer;
+let popup_ticks = 0;
 
 function popup(msg) {
-    err_ticks = 0;
-    clearTimeout(err_timer);
-    span_err.textContent = msg;
-    span_err.style.display = "block";
-    err_timer = setInterval(() => {
-        if (err_ticks >= 3)
-            return span_err.style.display = "none";
-        err_ticks++;
-        span_err.textContent += "."
+    popup_ticks = 0;
+    clearTimeout(popup_timer);
+    span_popup.textContent = msg;
+    span_popup.style.display = "block";
+    popup_timer = setInterval(() => {
+        if (popup_ticks >= 3)
+            return span_popup.style.display = "none";
+        popup_ticks++;
+        span_popup.textContent += "."
     }, 600);
 }
 
@@ -27,11 +27,46 @@ function toggle(e) {
     e.target.classList.replace(cssClass, i);
 }
 
-function nudge(amt) {
-    let i = Number(input_index.value) + amt;
-    if (i < 0) i = 0;
-    input_index.value = i;
-    displayBoard(i);
+let playing = false;
+let speed = 1000;
+let interval = 0;
+let fIndex = 0;
+
+function togglePlayback() {
+    if (playing) {
+        clearInterval(interval);
+        playing = false;
+        button_play_stop.textContent = "Play";
+    } else {
+        animate(Number(input_start.value), Number(input_end.value));
+        button_play_stop.textContent = "Stop";
+    }
+}
+
+function setSpeed(s) {
+    speed = 1000 / s;
+}
+
+function animate(start = 0, end = -1) {
+    if (start < 0 || start >= boards.length)
+        start = 0;
+    if (end < 0 || end > boards.length)
+        end = boards.length;
+    fIndex = start;
+    playing = true;
+    showAndStepF(end);
+    if (playing)
+        interval = window.setInterval(() => showAndStepF(end), speed);
+}
+
+function showAndStepF(end) {
+    displayBoard(fIndex);
+    fIndex++;
+    if (fIndex >= end) {
+        clearInterval(interval);
+        playing = false;
+        button_play_stop.textContent = "Play";
+    }
 }
 
 function dragFile(ev) {
@@ -55,4 +90,4 @@ function dropFile(ev) {
     }
 }
 
-export { popup, toggle, nudge, dragFile, dropFile }
+export { popup, toggle, togglePlayback, setSpeed, dragFile, dropFile }

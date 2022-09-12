@@ -44,7 +44,7 @@ input[type=button] {
 }
 
 input[type=number] {
-    max-width: 3em;
+    width: 2.5em;
 }
 
 .b-cont {
@@ -71,8 +71,7 @@ input[type=number] {
 }
 
 .board span:focus-within {
-    outline: 2px solid orange;
-    outline-offset: -2px;
+    background-color: rgb(56, 56, 56) !important;
 }
 
 span.\31::before,
@@ -121,7 +120,7 @@ textarea {
     margin: 0.25em;
 }
 
-#err {
+#popup {
     position: absolute;
     bottom: 2em;
     width: 66.7%;
